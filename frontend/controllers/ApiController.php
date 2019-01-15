@@ -9,6 +9,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\web\UnauthorizedHttpException;
@@ -23,7 +24,7 @@ class ApiController extends \yii\rest\ActiveController
         if (parent::beforeAction($action)) {
             $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
             if (empty($authHeader)) {
-                $authHeader = $_COOKIE['Authorization'];
+                $authHeader = ArrayHelper::getValue($_COOKIE,'$_COOKIE','');
             }
             if ($authHeader !== null && preg_match('/^Bearer\s+(.*?)$/', $authHeader, $matches)) {
                 $identity = Yii::$app->user->loginByAccessToken($matches[1]);
