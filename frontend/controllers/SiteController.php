@@ -2,7 +2,7 @@
 namespace frontend\controllers;
 
 use Yii;
-use yii\base\InvalidArgumentException;
+use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,6 +12,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\rest\ActiveController;
+use yii\web\HttpException;
 
 /**
  * Site controller
@@ -21,49 +23,34 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                //'only' => ['logout', 'signup','index'],
+//                'rules' => [
+//                    [
+//                        'actions' => ['signup','error','index'],
+//                        'allow' => true,
+//                        'roles' => ['?'],
+//                    ],
+//                    [
+//                        'actions' => ['logout'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+//                ],
+//            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['post'],
+//                ],
+//            ],
+//        ];
+//    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
 
     /**
      * Displays homepage.
@@ -72,7 +59,43 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->layout = false;
+        return $this->render('index',['status' => '123', 'error' => '', 'data' => '123']);
+    }
+
+    public function actionTest()
+    {
+        return $this->render('about');
+    }
+
+    public function actionError()
+    {
+//        echo "123";
+        $this->layout = false;
+        Yii::warning('error','rpcerror');
+        if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
+            // action has been invoked not from error handler, but by direct route, so we display '404 Not Found'
+            $exception = new HttpException(404, Yii::t('yii', 'Page not found.'));
+        }
+
+        if ($exception instanceof HttpException) {
+            $status = $exception->statusCode;
+            $error = $exception->getName();
+        } else {
+            $status = $exception->getCode();
+            $error = $exception->getMessage();
+        }
+        $contenttype = Yii::$app->request->getContentType();
+        if(stripos($contenttype,"application")!==false){
+//            return $this->response(['status' => $status, 'data' => '', 'error' => $error]);
+            return $this->render('error',['status'=>$status,'error'=>$error,'data' => '']);
+        }else{
+            if($status==401){
+                return $this->render("error");
+            }
+
+            return $this->render('error',['status'=>$status,'error'=>$error]);
+        }
     }
 
     /**
@@ -198,7 +221,7 @@ class SiteController extends Controller
     {
         try {
             $model = new ResetPasswordForm($token);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
