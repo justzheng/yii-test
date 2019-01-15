@@ -6,6 +6,8 @@
  * Time: 14:47
  */
 
+namespace console\controllers;
+
 use shmilyzxt\queue\Worker;
 
 class TestController extends \yii\console\Controller
