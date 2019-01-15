@@ -20,7 +20,7 @@ class Send extends JobHandler
      */
     public function handle($job, $data)
     {
-        file_put_contents('/var/www/html/yii-test.log','12313',FILE_APPEND);
+        file_put_contents('/var/www/html/yii-test.log','12313');
         Yii::warning('error','rpcerror');
         // TODO: Implement handle() method.
     }
