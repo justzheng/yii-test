@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -8,32 +9,72 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property int $uid 自增ID
+ * @property string $username 用户名
+ * @property string $auth_key 自动登录key
+ * @property string $password_hash 加密密码
+ * @property string $password_reset_token 重置密码token
+ * @property string $email 邮箱
+ * @property int $role 角色等级
+ * @property int $status 状态
+ * @property int $created_at 创建时间
+ * @property int $updated_at 更新时间
+ * @property string $token jwt
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    use \damirka\JWT\UserTrait;
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-
-
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'user';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['role', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['token'], 'string', 'max' => 64],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'uid' => 'Uid',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'Email',
+            'role' => 'Role',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'token' => 'Token',
+        ];
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
 
     /**
      * {@inheritdoc}
@@ -45,15 +86,19 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    protected static function getSecretKey()
     {
-        return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-        ];
+        return "12bAt2R1Szfd30q5k3eu";
+    }
+
+    public function getJTI()
+    {
+        return $this->token;
+    }
+
+    public static function findByJTI($id)
+    {
+        return self::findOne(['token' => $id]);
     }
 
     /**
@@ -61,16 +106,20 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['uid' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-    }
+//    public static function findIdentityByAccessToken($token, $type = null)
+//    {
+////        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+//        if(empty($token)){
+//            return null;
+//        }
+//        return static::findOne(['token' => $token, 'status' => self::STATUS_ACTIVE]);
+//    }
 
     /**
      * Finds user by username
@@ -185,5 +234,40 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function refreshToken()
+    {
+        if (!$this->getIsNewRecord()) {
+            try {
+                $token = Yii::$app->getSecurity()->generateRandomString(32);
+//                $im_token = Yii::$app->getSecurity()->generateRandomString(64);
+//                Yii::$app->db->createCommand("UPDATE " . $this->tableName() . " SET token=:token, im_token=:im_token WHERE uid=:uid")->bindValues([
+//                    ':token' => $token,
+//                    ':im_token' => $im_token,
+//                    ':uid' => $this->uid,
+//                ])->execute();
+                Yii::$app->db->createCommand("UPDATE " . $this->tableName() . " SET token=:token WHERE uid=:uid")->bindValues([
+                    ':token' => $token,
+                    ':uid' => $this->uid,
+                ])->execute();
+                $this->token = $token;
+
+                // 刷新网易云信TOKEN
+//                $response = Yii::$app->neteaseim->setActor(new User())->update($this->uid, null, $im_token);
+//                if ($response['code'] == 414 && $response['desc'] == $this->uid . ' not register') {
+//                    Yii::$app->neteaseim->setActor(new User())->create($this->uid, $this->username, null, '', $this->im_token);
+//                }
+
+                // 更新用户上次登录时间、上次登录设备
+//                Yii::$app->db->createCommand("UPDATE " . MemberDataExt::tableName() . " SET last_login=:last_login, last_device=:last_device WHERE uid=:uid")->bindValues([
+//                    ':last_login' => time(),
+//                    ':last_device' => ClientAnalysiser::getDeviceToken(),
+//                    ':uid' => $this->uid,
+//                ])->execute();
+//                $this->im_token = $im_token;
+            } catch (Exception $e) {
+            }
+        }
     }
 }
