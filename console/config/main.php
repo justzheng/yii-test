@@ -28,6 +28,13 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error','warning' ,'info'],
+                    'logFile' => '@console/runtime/logs/rpc.log',
+                    'categories' => ['rpcerror'],
+                    'logVars' => [],
+                ],
             ],
         ],
     ],
