@@ -11,10 +11,15 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'components' => [
-        'request' => [
-            'csrfParam' => '_csrf-frontend',
+    'modules' => [
+        'v1' => [
+            'class' => 'frontend\modules\api_v1\Module',
         ],
+        'v2' => [
+            'class' => 'frontend\modules\api_v2\Module',
+        ],
+    ],
+    'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -31,19 +36,29 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error','warning' ,'info'],
+                    'logFile' => '@frontend/runtime/logs/rpc.log',
+                    'categories' => ['rpcerror'],
+                    'logVars' => [],
+                ],
             ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '',
             'rules' => [
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
