@@ -12,12 +12,27 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii2"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "mdmsoft/yii2-admin": "~2.0",
+        "lspbupt/yii2-dingtalk": ">=1.1.1",
+        "damirka/yii2-jwt": "v0.2.1",
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "mdmsoft/yii2-upload-file": "~2.0",
+        "kartik-v/yii2-widget-fileinput": "@dev",
+        "karpoff/yii2-crop-image-upload": "*",
+        "icherisher/yii2-plupload": "*",
+        "bailangzhan/yii2-webuploader": "dev-master",
+        "yiier/yii2-aliyun-oss": "*",
+        "wi1dcard/alipay-sdk": "^1.1",
+        "izyue/yii2-alipay": "*",
+        "yansongda/pay": "^1.0",
+        "yiisoft/yii2-queue": "^2.1",
         "shmilyzxt/yii2-queue": "dev-master",
         "mojifan/yii2-predis": "^1.0"
     },
@@ -25,9 +40,8 @@
         "yiisoft/yii2-debug": "~2.0.0",
         "yiisoft/yii2-gii": "~2.0.0",
         "yiisoft/yii2-faker": "~2.0.0",
-        "codeception/base": "^2.4.0",
-        "phpunit/phpunit": "~6.5.5",
-        "codeception/verify": "~1.0.0"
+        "codeception/base": "^2.2.3",
+        "codeception/verify": "~0.3.1"
     },
     "config": {
         "process-timeout": 1800,
