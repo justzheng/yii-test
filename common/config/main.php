@@ -27,7 +27,7 @@ return [
                 'options'=> [],
             ],
             'queue' => 'default',
-            'expire' => 60,
+            'expire' => 30,
             'maxJob' => 0,
             'failed' => [
                 'logFail' => true,
