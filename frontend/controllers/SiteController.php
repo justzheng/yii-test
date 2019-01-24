@@ -14,6 +14,8 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
+use common\service\UserService;
+use Hprose\Yii\Server;
 
 /**
  * Site controller
@@ -234,5 +236,18 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * 用户服务
+     * @return mixed
+     */
+    public function actionUser() {
+        $service = new UserService();
+
+        $server = new Server();
+        $server->addInstanceMethods($service);
+
+        return $server->start();
     }
 }
