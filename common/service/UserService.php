@@ -13,6 +13,6 @@ class UserService
 {
     public function create($data) {
         //你的逻辑
-        echo "12313";
+       return $data;
     }
 }
