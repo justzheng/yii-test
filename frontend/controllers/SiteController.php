@@ -244,6 +244,7 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionUser() {
+
         $service = new UserService();
 
         $server = new Server();
@@ -256,5 +257,15 @@ class SiteController extends Controller
         $user = new Client('http://wmb2plus1.2plus1.cn/frontend/web/site/user');
         $uid = $user->test();
         var_dump($uid);
+    }
+
+    public function actionHello($name){
+            return "Hello $name!";
+    }
+
+    public function actionStart(){
+        $server = new Server();
+        $server->addFunction('hello');
+        $server->start();
     }
 }
