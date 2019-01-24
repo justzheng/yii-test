@@ -16,6 +16,7 @@ use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
 use Hprose\Yii\Server;
+use Hprose\Http\Client;
 
 /**
  * Site controller
@@ -249,5 +250,12 @@ class SiteController extends Controller
         $server->addInstanceMethods($service);
 
         return $server->start();
+    }
+
+    public function actionDaw(){
+        $user = new Client('http://localhost/core/user');
+        $uid = $user->create([
+            'name' => 'Hprose',
+        ]);
     }
 }
