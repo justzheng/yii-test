@@ -253,9 +253,7 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $user = new Client();
-        $uid = $user->create('http://wmb2plus1.2plus1.cn/frontend/web/site/user');
-        var_dump($uid);
-        return $uid;
+        $user = new Client('http://wmb2plus1.2plus1.cn/frontend/web/site/user');
+        $user->test();
     }
 }

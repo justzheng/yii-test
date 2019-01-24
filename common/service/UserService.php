@@ -11,8 +11,9 @@ namespace common\service;
 
 class UserService
 {
-    public function create($data) {
+    public function test($data) {
         //你的逻辑
-       return 123;
+        echo "12313";
+       //return 123;
     }
 }
