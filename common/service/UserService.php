@@ -13,6 +13,6 @@ class UserService
 {
     public function create($data) {
         //你的逻辑
-       return $data;
+       return 123;
     }
 }
