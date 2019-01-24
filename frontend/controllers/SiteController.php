@@ -20,6 +20,7 @@ use yii\web\HttpException;
  */
 class SiteController extends Controller
 {
+//public $layout = false;
     /**
      * {@inheritdoc}
      */
@@ -59,13 +60,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = false;
         return $this->render('index',['status' => '123', 'error' => '', 'data' => '123']);
     }
 
     public function actionTest()
     {
-        return $this->render('about');
+        return $this->render('test');
     }
 
     public function actionError()

@@ -18,7 +18,7 @@ use console\Job\Send;
 
 class MemberController extends ApiController
 {
-    public $allow = ['login','user','miss','weixinpay','sendfile'];
+    public $allow = ['login','user','miss','weixinpay','sendfile','test'];
     public $modelClass = 'common\models\User';
     protected $config = [
         'wechat' => [
@@ -31,7 +31,7 @@ class MemberController extends ApiController
 
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
+        //$behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
         return $behaviors;
     }
 
@@ -40,7 +40,8 @@ class MemberController extends ApiController
 //        var_dump($_COOKIE['Authorization']);
 //        exit;
         $model = User::findOne(['uid'=>'1']);
-        return Yii::$app->getUser()->getId()?$model:0;
+        //return Yii::$app->getUser()->getId()?$model:0;
+        return $model;
     }
 
     public function actionLogin(){
