@@ -11,14 +11,14 @@ namespace common\service;
 
 class UserService
 {
-    public function test($a,$b) {
+    public function test($a=1,$b=1) {
         //你的逻辑
         $c = $a+$b;
         return $c;
        //return 123;
     }
 
-    public function testSum($a,$b) {
+    public function testSum($a=1,$b=1) {
         //你的逻辑
         $c = $a+$b;
         return $c;
