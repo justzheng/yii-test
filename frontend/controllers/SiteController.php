@@ -256,7 +256,7 @@ class SiteController extends Controller
         $user = new Client('http://wmb2plus1.2plus1.cn/frontend/web/site/user');
         $a = 1;
         $b = 2;
-        $uid = $user->test($a,$b);
+        $uid = $user->UserService->test($a,$b);
         var_dump($uid);
     }
 
