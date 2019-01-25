@@ -259,13 +259,13 @@ class SiteController extends Controller
         var_dump($uid);
     }
 
-    public function actionHello($name){
-            return "Hello $name!";
-    }
 
     public function actionStart(){
+        function Hello($name){
+            return "Hello $name!";
+        }
         $server = new Server();
-        $server->addFunction('hello');
+        $server->addFunction('Hello');
         $server->start();
     }
 }
