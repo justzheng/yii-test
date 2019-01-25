@@ -258,8 +258,8 @@ class SiteController extends Controller
         $client = Client::create('http://wmb2plus1.2plus1.cn/frontend/web/site/user/');
         $a = 1;
         $b = 2;
-        $uid = $client->testSum($a,$b,new InvokeSettings(array('mode' => ResultMode::Normal)));
-        var_dump($uid);
+        $uid = $client->testSum($a,$b,new InvokeSettings(array('mode' => ResultMode::Raw)));
+        var_dump($client->testSum($a,$b,new InvokeSettings(array('mode' => ResultMode::Raw))));
     }
 
 
