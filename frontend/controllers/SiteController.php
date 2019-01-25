@@ -246,7 +246,6 @@ class SiteController extends Controller
     public function actionUser() {
 
         $service = new UserService();
-
         $server = new Server();
         $server->addInstanceMethods($service);
 
@@ -255,7 +254,9 @@ class SiteController extends Controller
 
     public function actionDaw(){
         $user = new Client('http://wmb2plus1.2plus1.cn/frontend/web/site/user');
-        $uid = $user->test();
+        $a = 1;
+        $b = 2;
+        $uid = $user->test($a,$b);
         var_dump($uid);
     }
 
