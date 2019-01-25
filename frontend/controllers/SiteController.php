@@ -256,7 +256,7 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = Client::create('http://localhost/yii-test/frontend/web/site/user/',false);
+        $client = Client::create('http://wmb2plus1.2plus1.cn/frontend/web/site/user',false);
         var_dump($client->test());
     }
 
