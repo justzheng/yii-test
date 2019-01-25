@@ -17,4 +17,11 @@ class UserService
         return $c;
        //return 123;
     }
+
+    public function testSum($a,$b) {
+        //你的逻辑
+        $c = $a+$b;
+        return $c;
+        //return 123;
+    }
 }
