@@ -15,8 +15,8 @@ use frontend\models\ContactForm;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
-use Hprose\Yii\Server;
-use Hprose\Client;
+use Hprose\Http\Server;
+use Hprose\Http\Client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
 
@@ -25,6 +25,7 @@ use Hprose\ResultMode;
  */
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
 //public $layout = false;
     /**
      * {@inheritdoc}
@@ -255,20 +256,11 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = Client::create('http://wmb2plus1.2plus1.cn/frontend/web/site/user/');
-        $a = 1;
-        $b = 2;
-        $uid = $client->testSum($a,$b,new InvokeSettings(array('mode' => ResultMode::Raw)));
-        var_dump($client->testSum($a,$b,new InvokeSettings(array('mode' => ResultMode::Raw))));
+        $client = Client::create('http://localhost/yii-test/frontend/web/site/user/',false);
+        var_dump($client->hello('yii'));
     }
 
-
-    public function actionStart(){
-        function Hello($name){
-            return "Hello $name!";
-        }
-        $server = new Server();
-        $server->addFunction('Hello');
-        $server->start();
+    function hello(){
+            return "Hello!";
     }
 }

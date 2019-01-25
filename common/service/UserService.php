@@ -18,10 +18,16 @@ class UserService
        //return 123;
     }
 
-    public function testSum($a=1,$b=1) {
+    public function testSum($data) {
         //你的逻辑
-        $c = $a+$b;
-        return $c;
-        //return 123;
+        return $data;
+    }
+
+    function hello($name) {
+        return "Hello $name!";
+    }
+
+    function sum($a, $b, $c) {
+        return $a + $b + $c;
     }
 }
