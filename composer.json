@@ -36,7 +36,11 @@
         "shmilyzxt/yii2-queue": "dev-master",
         "mojifan/yii2-predis": "^1.0",
         "php-amqplib/php-amqplib": "^2.8",
-        "hprose/hprose-yii": "^2.0"
+        "hprose/hprose-yii": "^2.0",
+        "mongosoft/yii2-soap-server": "*",
+        "mongosoft/yii2-soap-client": "*",
+        "ztaoyu/test": "dev-master",
+        "cyr/junhuan": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -15,6 +15,7 @@ use Yii;
 use Alipay\AopClient;
 use Yansongda\Pay\Pay;
 use console\Job\Send;
+use yii\base\UserException;
 
 class MemberController extends ApiController
 {
@@ -31,11 +32,12 @@ class MemberController extends ApiController
 
     public function behaviors() {
         $behaviors = parent::behaviors();
-        //$behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
+        $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
         return $behaviors;
     }
 
     public function actionTest(){
+        //throw new UserException();
 //        var_dump(Yii::$app->request->getHeaders()->get('Authorization'));
 //        var_dump($_COOKIE['Authorization']);
 //        exit;

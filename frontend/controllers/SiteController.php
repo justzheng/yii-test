@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\base\UserException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -19,6 +20,7 @@ use Hprose\Http\Server;
 use Hprose\Http\Client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -76,9 +78,10 @@ class SiteController extends Controller
 
     public function actionError()
     {
+//        return false;
 //        echo "123";
-        $this->layout = false;
-        Yii::warning('error','rpcerror');
+//        $this->layout = false;
+//        Yii::warning('error','rpcerror');
         if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
             // action has been invoked not from error handler, but by direct route, so we display '404 Not Found'
             $exception = new HttpException(404, Yii::t('yii', 'Page not found.'));
@@ -93,8 +96,10 @@ class SiteController extends Controller
         }
         $contenttype = Yii::$app->request->getContentType();
         if(stripos($contenttype,"application")!==false){
-//            return $this->response(['status' => $status, 'data' => '', 'error' => $error]);
-            return $this->render('error',['status'=>$status,'error'=>$error,'data' => '']);
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $data = ['status' => $status, 'data' => '', 'error' => $error];
+            return $data;
+//            return $this->render('error',['status'=>$status,'error'=>$error,'data' => '']);
         }else{
             if($status==401){
                 return $this->render("error");
@@ -263,4 +268,13 @@ class SiteController extends Controller
     function hello(){
             return "Hello!";
     }
+
+    public function actionWsdl(){
+        $client = new \mongosoft\soapclient\Client([
+            'url' => 'http://localhost/yii-test/frontend/web/xml/wsdl',
+        ]);
+        echo $client->getHello('Alex');
+    }
+
+
 }

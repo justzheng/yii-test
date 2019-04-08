@@ -29,10 +29,9 @@ class UploadedFile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['filename'], 'string'],
+            [['filename', 'type'], 'string'],
             [['size'], 'integer'],
             [['name'], 'string', 'max' => 64],
-            [['type'], 'string', 'max' => 32],
         ];
     }
 
