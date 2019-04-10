@@ -16,10 +16,15 @@ use Alipay\AopClient;
 use Yansongda\Pay\Pay;
 use console\Job\Send;
 use yii\base\UserException;
+use Hprose\Http\Server;
+
+function hello() {
+    return "Hello 123!";
+}
 
 class MemberController extends ApiController
 {
-    public $allow = ['login','user','miss','weixinpay','sendfile','test'];
+    public $allow = ['login','user','miss','weixinpay','sendfile','test','start','hello'];
     public $modelClass = 'common\models\User';
     protected $config = [
         'wechat' => [
@@ -83,6 +88,21 @@ class MemberController extends ApiController
     }
 
     public function actionSendfile(){
-        \Yii::$app->queue->pushOn(new Send(),['email'=>'49783121@qq.com','title'=>'test','content'=>'email test'],'email');
+        for($i=0;$i<=100;$i++){
+            \Yii::$app->queue->pushOn(new Send(),['email'=>'49783121@qq.com','title'=>'test','content'=>'email test'],'email');
+        }
+    }
+
+
+    public function actionHello() {
+        return "Hello 123!";
+    }
+
+    public function actionStart(){
+        var_dump(is_callable('hello'));
+        exit;
+        $server = new Server();
+        $server->addFunction('hello');
+        $server->start();
     }
 }
