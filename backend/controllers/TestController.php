@@ -16,6 +16,11 @@ use ztaoyu\test\request\request;
 use cyr\junhuan\PayService;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use backend\models\Upload;
+use PHPExcel;
+use yii\web\UploadedFile;
+use common\models\ExamQuestionXuefa;
+use common\models\StudyLesson;
 
 class TestController extends Controller
 {
@@ -34,17 +39,17 @@ class TestController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['composer','test'],
+                        'actions' => ['composer','test','import'],
                         'allow' => true,
                         'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
-                            $a =  '/'.ArrayHelper::getValue($action,'controller.module.requestedRoute','');
-                            if (Yii::$app->user->can($a)) {
-                                return true;
-                            } else {
-                                throw new \yii\web\HttpException('401','权限不足');
-                            }
-                        },
+//                        'matchCallback' => function ($rule, $action) {
+//                            $a =  '/'.ArrayHelper::getValue($action,'controller.module.requestedRoute','');
+//                            if (Yii::$app->user->can($a)) {
+//                                return true;
+//                            } else {
+//                                throw new \yii\web\HttpException('401','权限不足');
+//                            }
+//                        },
                     ],
                 ],
             ],
@@ -102,5 +107,133 @@ class TestController extends Controller
         print_r($html);
 //        $PlayEvent = new request();
 //        echo $PlayEvent->test();
+    }
+
+    public function actionImport(){
+        set_time_limit(0);
+        $model = new Upload();
+        if (Yii::$app->request->isPost) {
+            $file = UploadedFile::getInstance($model, 'file');//print_r($file);exit;
+            $path="upload/excel/".date("Ymd",time())."/";//print_r($path);exit;
+            if ($file && $model->validate()) {
+                if (!file_exists($path)) {
+                    mkdir($path,0777, true);
+                }
+                $file->saveAs($path . time() . '.' . $file->getExtension());//print_r($file);exit;
+                Yii::$app->session->setFlash('success', '上传成功！');
+                $this->data_import($path . time() . '.' . $file->getExtension());
+            }
+        }
+        return $this->render('import',['model'=>$model]);
+    }
+
+    public function data_import($file)
+    {
+        require(Yii::getAlias("@vendor")."/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php");//引入读取excel的类文件
+        require(Yii::getAlias("@vendor")."/phpoffice/phpexcel/Classes/PHPExcel.php");
+        $filename=$file;//print_r($filename);exit;
+        $fileType=\PHPExcel_IOFactory::identify($filename);//自动获取文件的类型提供给phpexcel用
+        $objReader=\PHPExcel_IOFactory::createReader($fileType);//获取文件读取操作对象
+        $excel = $objReader->load($filename);//引入文件
+        $excelSheets = $excel->getAllSheets();
+        foreach ($excelSheets as $SheetIndex => $activeSheet) {
+            $sheetColumnTotal = $activeSheet->getHighestRow();//总行数
+            if($sheetColumnTotal == 1){
+                continue;
+            }
+            for($i = 2;$i < $sheetColumnTotal;$i++){
+                $data=array(
+                    $activeSheet->getCell('A'.$i)->getValue(),
+                    $activeSheet->getCell('B'.$i)->getValue(),
+                    $activeSheet->getCell('C'.$i)->getValue(),
+                    $activeSheet->getCell('D'.$i)->getValue(),
+                    $activeSheet->getCell('E'.$i)->getValue(),
+                    $activeSheet->getCell('F'.$i)->getValue(),
+                    $activeSheet->getCell('G'.$i)->getValue(),
+                    $activeSheet->getCell('H'.$i)->getValue(),
+                    $activeSheet->getCell('I'.$i)->getValue(),
+                    $activeSheet->getCell('J'.$i)->getValue(),
+                    $activeSheet->getCell('K'.$i)->getValue(),
+                    $activeSheet->getCell('L'.$i)->getValue(),
+                    $activeSheet->getCell('M'.$i)->getValue(),
+                    $activeSheet->getCell('N'.$i)->getValue(),
+                    $activeSheet->getCell('O'.$i)->getValue(),
+                    $activeSheet->getCell('P'.$i)->getValue(),
+//                    $activeSheet->getCell('Q'.$i)->getValue(),
+//                    $activeSheet->getCell('R'.$i)->getValue(),
+//                    $activeSheet->getCell('S'.$i)->getValue(),
+//                    $activeSheet->getCell('T'.$i)->getValue(),
+//                    $activeSheet->getCell('U'.$i)->getValue(),
+//                    $activeSheet->getCell('V'.$i)->getValue(),
+//                    $activeSheet->getCell('W'.$i)->getValue(),
+//                    $activeSheet->getCell('X'.$i)->getValue(),
+//                    $activeSheet->getCell('Y'.$i)->getValue(),
+//                    $activeSheet->getCell('Z'.$i)->getValue(),
+//                    $activeSheet->getCell('AA'.$i)->getValue(),
+//                    $activeSheet->getCell('AB'.$i)->getValue(),
+//                    $activeSheet->getCell('AC'.$i)->getValue(),
+//                    $activeSheet->getCell('AD'.$i)->getValue(),
+//                    $activeSheet->getCell('AE'.$i)->getValue(),
+            );
+                if(isset($data['1'])){
+                    $info=Yii::$app->db->createCommand()->insert(StudyLesson::tableName(), [
+                        'car_type' => $data['0'],
+                        'category_id' => $data['1'],
+                        'subject_id' => $data['2'],
+                        'type' => $data['3'],
+                        'lesson_id' => $data['4'],
+                        'parent_id' => $data['5'],
+                        'top_parent_id' => $data['6'],
+                        'course_name' => $data['7'],
+                        'video' => $data['8'],
+                        'video_start' => $data['9'],
+                        'duration' => $data['10'],
+                        'edit_duration' => $data['11'],
+                        'sort' => $data['12'],
+                        'play_url' => $data['13'],
+                        'status' => $data['14'],
+                        'updated_at' => $data['15'],
+//                    'settlement' => $data['14'],
+//                    'forecast_income' => $data['15'],
+//                    'settlement_time' => $data['16'],
+//                    'commission_rate' => $data['17'],
+//                    'commission_amount' => $data['18'],
+//                    'service_charge_ratio' => $data['19'],
+//                    'subsidy_ratio' => $data['20'],
+//                    'subsidy_amount' => $data['21'],
+//                    'subsidy_type' => $data['22'],
+//                    'transaction_platform' => $data['23'],
+//                    'service_source' => $data['24'],
+//                    'order_number' => $data['25'],
+//                    'category_name' => $data['26'],
+//                    'media_id' => $data['27'],
+//                    'media_name' => $data['28'],
+//                    'advertisement_id' => $data['29'],
+//                    'advertisement_name' => $data['30'],
+                    ])->execute();
+                    if ($info) {
+                        $ok = 1;
+                    }
+                }
+            }
+        }
+        if ($ok == 1){
+            $this->redirect(array('index'));
+        } else{
+            echo "<script>alert('操作失败');window.history.back();</script>";
+        }
+
+//        $data = [];
+//        if($total_line > 1) {
+//            for ($row = 2; $row <= $total_line; $row++) {
+//                for ($column = 'A'; $column <= $total_column; $column++) {
+//                    //var_dump($column);
+//                    $data[$row][$column] = trim($phpExcel->getCell($column . $row)->getValue());
+//                }
+//
+//                var_dump($data);
+//                die;
+//            }
+//        }
     }
 }

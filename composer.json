@@ -40,7 +40,9 @@
         "mongosoft/yii2-soap-server": "*",
         "mongosoft/yii2-soap-client": "*",
         "ztaoyu/test": "dev-master",
-        "cyr/junhuan": "dev-master"
+        "cyr/junhuan": "dev-master",
+        "phpoffice/phpexcel": "*",
+        "cyr/ueditor": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
