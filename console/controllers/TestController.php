@@ -10,6 +10,7 @@ namespace console\controllers;
 
 use shmilyzxt\queue\Worker;
 use common\modelsext\TableTitleRelation;
+use Yii;
 
 class TestController extends \yii\console\Controller
 {
