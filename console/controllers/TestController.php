@@ -34,7 +34,7 @@ class TestController extends \yii\console\Controller
 
             if ($data_reader->count() > 0) {
                 while ($title = $data_reader->read()) {
-                    if($title['expired_at'<time()]){
+                    if($title['expired_at']<time()){
                         Yii::$app->db->createCommand("UPDATE " . TableTitleRelation::tableName() . " SET status=:status WHERE id=:id")->bindValues([
                             ':status' => 2,
                             ':id' => $title['id'],
