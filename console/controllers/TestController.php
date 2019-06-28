@@ -38,10 +38,10 @@ class TestController extends \yii\console\Controller
                             ':status' => 2,
                             ':id' => $title['id'],
                         ])->execute();
-                        \Yii::$app->memberRemind->sendVerificationMessage($title['uid'], [
-                            'title' => '称号变更',
-                            'content' => '您的称号已到期'
-                        ]);
+//                        \Yii::$app->memberRemind->sendVerificationMessage($title['uid'], [
+//                            'title' => '称号变更',
+//                            'content' => '您的称号已到期'
+//                        ]);
                     }
                 }
                 sleep(10);
