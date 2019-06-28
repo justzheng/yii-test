@@ -32,24 +32,25 @@ class TestController extends \yii\console\Controller
                 ':status' => 1,
             ])->query();
 
-            if ($data_reader->count() > 0) {
-                while ($title = $data_reader->read()) {
-                    if($title['expired_at']<time()){
-                        Yii::$app->db->createCommand("UPDATE " . TableTitleRelation::tableName() . " SET status=:status WHERE id=:id")->bindValues([
-                            ':status' => 2,
-                            ':id' => $title['id'],
-                        ])->execute();
-//                        \Yii::$app->memberRemind->sendVerificationMessage($title['uid'], [
-//                            'title' => '称号变更',
-//                            'content' => '您的称号已到期'
-//                        ]);
-                    }
-                }
-                sleep(10);
-            } else {
-                sleep(86400);
-                $offset = 0;
-            }
+//            if ($data_reader->count() > 0) {
+//                while ($title = $data_reader->read()) {
+//                    if($title['expired_at'<time()]){
+//                        Yii::$app->db->createCommand("UPDATE " . TableTitleRelation::tableName() . " SET status=:status WHERE id=:id")->bindValues([
+//                            ':status' => 2,
+//                            ':id' => $title['id'],
+//                        ])->execute();
+////                        \Yii::$app->memberRemind->sendVerificationMessage($title['uid'], [
+////                            'title' => '称号变更',
+////                            'content' => '您的称号已到期'
+////                        ]);
+//                    }
+//                }
+//                sleep(10);
+//            } else {
+//                sleep(86400);
+//                $offset = 0;
+//            }
+            sleep(10);
         }
     }
 }
