@@ -24,13 +24,18 @@ class TestController extends \yii\console\Controller
         $limit = 1000;
 
         while (true) {
-            $sql = "SELECT * FROM " . TableTitleRelation::tableName() . " WHERE status = :status ORDER BY id ASC LIMIT $offset, $limit";
-
-            $offset += $limit;
-
-            $data_reader = Yii::$app->db->createCommand($sql)->bindValues([
-                ':status' => 1,
-            ])->query();
+            if(time()>1561706000){
+                echo "123";
+            }else{
+                sleep(1);
+            }
+//            $sql = "SELECT * FROM " . TableTitleRelation::tableName() . " WHERE status = :status ORDER BY id ASC LIMIT $offset, $limit";
+//
+//            $offset += $limit;
+//
+//            $data_reader = Yii::$app->db->createCommand($sql)->bindValues([
+//                ':status' => 1,
+//            ])->query();
 
 //            if ($data_reader->count() > 0) {
 //                while ($title = $data_reader->read()) {
