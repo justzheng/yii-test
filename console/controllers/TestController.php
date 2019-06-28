@@ -28,7 +28,7 @@ class TestController extends \yii\console\Controller
 
             $offset += $limit;
 
-            $data_reader = Yii::$app->db_console->createCommand($sql)->bindValues([
+            $data_reader = Yii::$app->db->createCommand($sql)->bindValues([
                 ':status' => 1,
             ])->query();
 
