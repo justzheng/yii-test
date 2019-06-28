@@ -52,7 +52,7 @@ class TestController extends \yii\console\Controller
                 }
                 sleep(10);
             } else {
-                sleep(86400);
+                sleep(10);
                 $offset = 0;
             }
 //            sleep(10);
