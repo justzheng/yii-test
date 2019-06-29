@@ -5,6 +5,7 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'bootstrap' => ['commonQueue'],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
