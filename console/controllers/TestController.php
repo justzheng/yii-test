@@ -61,4 +61,15 @@ class TestController extends \yii\console\Controller
 //            sleep(10);
         }
     }
+
+    public function actionRemid2()
+    {
+        $offset = 0;
+        $limit = 1000;
+
+        while (true) {
+            sleep(1);
+            Yii::$app->commonQueue->push(new Test());
+        }
+    }
 }
