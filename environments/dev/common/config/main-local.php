@@ -19,7 +19,7 @@ return [
         'commonQueue' => [
             'class' => 'yii\queue\redis\Queue',
             'redis' => 'yii2Redis',
-            'channel' => 'common-queue'
+            'channel' => 'common-queue2'
         ],
         'yii2Redis' => [
             'class' => '\yii\redis\Connection',
