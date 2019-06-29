@@ -42,7 +42,8 @@
         "ztaoyu/test": "dev-master",
         "cyr/junhuan": "dev-master",
         "phpoffice/phpexcel": "*",
-        "cyr/ueditor": "dev-master"
+        "cyr/ueditor": "dev-master",
+        "yiisoft/yii2-redis": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -21,5 +21,11 @@ return [
             'redis' => 'yii2Redis',
             'channel' => 'common-queue'
         ],
+        'yii2Redis' => [
+            'class' => '\yii\redis\Connection',
+            'hostname' => 'redis',
+            'port' => 6379,
+            'database' => 8
+        ],
     ],
 ];
