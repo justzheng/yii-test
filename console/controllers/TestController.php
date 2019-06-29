@@ -26,7 +26,7 @@ class TestController extends \yii\console\Controller
 
         while (true) {
             sleep(1);
-            Yii::$app->commonQueue->push(new Test());
+            Yii::$app->commonQueue2->push(new Test());
 //            if(time()>1561706000){
 //                echo "123";
 //            }else{
