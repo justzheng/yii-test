@@ -1,6 +1,6 @@
 <?php
 return [
-    'bootstrap' => ['commonQueue2'],
+    'bootstrap' => ['commonQueue2','commonQueue'],
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -21,6 +21,11 @@ return [
             'class' => 'yii\queue\redis\Queue',
             'redis' => 'yii2Redis',
             'channel' => 'common-queue2'
+        ],
+        'commonQueue' => [
+            'class' => 'yii\queue\redis\Queue',
+            'redis' => 'yii2Redis',
+            'channel' => 'common-queue'
         ],
         'yii2Redis' => [
             'class' => '\yii\redis\Connection',
