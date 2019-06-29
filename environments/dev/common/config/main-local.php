@@ -16,7 +16,7 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'commonQueue' => [
+        'commonQueue2' => [
             'class' => 'yii\queue\redis\Queue',
             'redis' => 'yii2Redis',
             'channel' => 'common-queue2'
