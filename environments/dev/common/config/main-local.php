@@ -1,5 +1,6 @@
 <?php
 return [
+    'bootstrap' => ['commonQueue2'],
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
