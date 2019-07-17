@@ -24,7 +24,7 @@ function hello() {
 
 class MemberController extends ApiController
 {
-    public $allow = ['login','user','miss','weixinpay','sendfile','test','start','hello'];
+    public $allow = ['login','user','miss','weixinpay','sendfile','start','hello'];
     public $modelClass = 'common\models\User';
     protected $config = [
         'wechat' => [
@@ -53,7 +53,7 @@ class MemberController extends ApiController
 
     public function actionLogin(){
         $user = User::findOne(['uid'=>1]);
-        //$user->refreshToken();
+        $user->refreshToken();
         $jwt = $user->getJWT();
         setcookie('Authorization', 'Bearer ' . $jwt, time() + 86400 * 365, '/', Yii::$app->request->serverName);
         //var_dump($_COOKIE);

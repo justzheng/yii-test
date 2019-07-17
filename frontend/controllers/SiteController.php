@@ -94,8 +94,10 @@ class SiteController extends Controller
             $status = $exception->getCode();
             $error = $exception->getMessage();
         }
-        $contenttype = Yii::$app->request->getContentType();
-        if(stripos($contenttype,"application")!==false){
+        $contenttype = Yii::$app->request->getAcceptableContentTypes();
+        if ($contenttype != 'text/html') {
+//        }
+//        if(stripos($contenttype,"application")!==false){
             Yii::$app->response->format = Response::FORMAT_JSON;
             $data = ['status' => $status, 'data' => '', 'error' => $error];
             return $data;

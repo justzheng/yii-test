@@ -12,6 +12,7 @@ use shmilyzxt\queue\Worker;
 use common\modelsext\TableTitleRelation;
 use Yii;
 use console\Job\Test;
+use console\Job\Test2;
 
 class TestController extends \yii\console\Controller
 {
@@ -26,7 +27,7 @@ class TestController extends \yii\console\Controller
 
         while (true) {
             sleep(1);
-            Yii::$app->commonQueue2->push(new Test());
+            Yii::$app->commonQueue->push(new Test());
 //            if(time()>1561706000){
 //                echo "123";
 //            }else{
@@ -69,7 +70,7 @@ class TestController extends \yii\console\Controller
 
         while (true) {
             sleep(1);
-            Yii::$app->commonQueue->push(new Test());
+            Yii::$app->commonQueue->push(new Test2());
         }
     }
 }
