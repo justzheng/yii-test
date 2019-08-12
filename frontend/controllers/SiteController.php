@@ -17,7 +17,7 @@ use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
 use Hprose\Http\Server;
-use Hprose\Http\client;
+use Hprose\Http\Client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
 use yii\web\Response;
