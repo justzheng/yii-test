@@ -264,7 +264,7 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = Client::create('http://47.96.64.84/yii-test/frontend/web/index.php/site/user/',false);
+        $client = Client::create('http://47.92.226.55/yii-test/frontend/web/index.php/site/user/',false);
         $client->testSum(111);
 //        echo "123";
 ////        var_dump($client);exit;
@@ -277,7 +277,7 @@ class SiteController extends Controller
 
     public function actionWsdl(){
         $client = new \mongosoft\soapclient\Client([
-            'url' => 'http://47.96.64.84/yii-test/frontend/web/index.php/xml/wsdl',
+            'url' => 'http://47.92.226.55/yii-test/frontend/web/index.php/xml/wsdl',
         ]);
         echo $client->getHello('Alex');
     }
