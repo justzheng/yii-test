@@ -16,8 +16,8 @@ use frontend\models\ContactForm;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
-use Hprose\Http\Server;
-use Hprose\Http\Client;
+use Hprose\Socket\Server;
+use Hprose\Socket\Client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
 use yii\web\Response;
@@ -256,15 +256,17 @@ class SiteController extends Controller
     public function actionUser() {
 
         $service = new UserService();
-        $server = new Server();
+        $server = new Server('tcp://127.0.0.1:8088');
+//        var_dump($server);
         $server->addInstanceMethods($service);
 
         return $server->start();
     }
 
     public function actionDaw(){
-        $client = Client::create('http://127.0.0.1/yii-test/frontend/web/site/user/',false);
-        var_dump($client->test());
+        $client = \Hprose\Socket\Client::create('tcp://127.0.0.1:8088',false);
+//        var_dump($client);exit;
+        var_dump($client->testSum(111));
     }
 
     function hello(){
@@ -273,7 +275,7 @@ class SiteController extends Controller
 
     public function actionWsdl(){
         $client = new \mongosoft\soapclient\Client([
-            'url' => 'http://localhost/yii-test/frontend/web/xml/wsdl',
+            'url' => 'http://127.0.0.1/yii-test/frontend/web/index.php/xml/wsdl',
         ]);
         echo $client->getHello('Alex');
     }

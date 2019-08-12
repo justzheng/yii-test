@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'name' => 'ztyHouse',
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
@@ -57,7 +58,7 @@ return [
             'class' => 'mdm\admin\components\AccessControl',
             'allowActions' => [
 //                'site/*',//允许访问的节点，可自行添加
-                'admin/*',//允许所有人访问admin节点及其子节点
+//                'admin/*',//允许所有人访问admin节点及其子节点
             ]
         ],
     ],

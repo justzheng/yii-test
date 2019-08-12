@@ -24,7 +24,7 @@ class ApiController extends \yii\rest\ActiveController
         if (parent::beforeAction($action)) {
             $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
             if (empty($authHeader)) {
-                $authHeader = ArrayHelper::getValue($_COOKIE,'$_COOKIE','');
+                $authHeader = ArrayHelper::getValue($_COOKIE,'Authorization','');
             }
             if ($authHeader !== null && preg_match('/^Bearer\s+(.*?)$/', $authHeader, $matches)) {
                 $identity = Yii::$app->user->loginByAccessToken($matches[1]);
@@ -63,5 +63,27 @@ class ApiController extends \yii\rest\ActiveController
         }
 
         return true;
+    }
+
+    public function success($data = null)
+    {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        return [
+            'status' => true,
+            'code' => 200,
+            'msg' => '',
+            'data' => $data
+        ];
+    }
+
+    public function fail($errorMessage, $errorCode = 9999)
+    {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        return [
+            'status' => false,
+            'code' => $errorCode,
+            'msg' => $errorMessage,
+            'data' => null
+        ];
     }
 }

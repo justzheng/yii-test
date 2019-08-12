@@ -48,7 +48,7 @@ class MemberController extends ApiController
 //        exit;
         $model = User::findOne(['uid'=>'1']);
         //return Yii::$app->getUser()->getId()?$model:0;
-        return $model;
+        return $this->success($model);
     }
 
     public function actionLogin(){
@@ -57,7 +57,8 @@ class MemberController extends ApiController
         $jwt = $user->getJWT();
         setcookie('Authorization', 'Bearer ' . $jwt, time() + 86400 * 365, '/', Yii::$app->request->serverName);
         //var_dump($_COOKIE);
-        return $jwt;
+        return $this->success($jwt);
+        //return $jwt;
     }
 
     public function actionUser(){
