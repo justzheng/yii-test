@@ -16,7 +16,7 @@ use frontend\models\ContactForm;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
-use Hprose\Socket\server;
+use Hprose\Socket\Server;
 use Hprose\Socket\client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
