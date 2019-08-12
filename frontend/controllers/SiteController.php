@@ -256,9 +256,9 @@ class SiteController extends Controller
     public function actionUser() {
 
         $service = new UserService();
-        $server = new Server('tcp://127.0.0.1:8088');
+        $server = new Server('tcp://0.0.0.0:8889');
 //        var_dump($server);
-        $server->addInstanceMethods($service);
+        //$server->addInstanceMethods($service);
 
         return $server->start();
     }
