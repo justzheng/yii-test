@@ -256,7 +256,7 @@ class SiteController extends Controller
     public function actionUser() {
 
         $service = new UserService();
-        $server = new Server('tcp://47.92.226.55:8889');
+        $server = new Server('tcp://47.92.226.55:9999');
 //        var_dump($server);
         $server->addInstanceMethods($service);
 
@@ -264,7 +264,7 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = \Hprose\Socket\Client::create('tcp://47.92.226.55:8089',false);
+        $client = \Hprose\Socket\Client::create('tcp://47.92.226.55:9999',false);
 //        var_dump($client);exit;
         var_dump($client->testSum(111));
     }
