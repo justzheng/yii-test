@@ -16,8 +16,8 @@ use frontend\models\ContactForm;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
-use Hprose\Socket\Server;
-use Hprose\Socket\client;
+use Hprose\Http\Server;
+use Hprose\Http\client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
 use yii\web\Response;
@@ -256,7 +256,7 @@ class SiteController extends Controller
     public function actionUser() {
 
         $service = new UserService();
-        $server = new Server('tcp://0.0.0.0:80');
+        $server = new Server();
 //        var_dump($server);
         $server->addInstanceMethods($service);
 
@@ -264,9 +264,12 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = \Hprose\Socket\Client::create('tcp://0.0.0.0:80',false);
-//        var_dump($client);exit;
-        var_dump($client->testSum(111));
+        set_time_limit(0);
+        $client = \Hprose\Http\Client::create('http://127.0.0.1/yii-test/frontend/web/index.php/site/user/',false);
+        $client->testSum(111);
+//        echo "123";
+////        var_dump($client);exit;
+//        var_dump($client->testSum(111));
     }
 
     function hello(){
