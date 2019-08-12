@@ -264,7 +264,6 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        set_time_limit(0);
         $client = Client::create('http://47.96.64.84/yii-test/frontend/web/index.php/site/user/',false);
         $client->testSum(111);
 //        echo "123";
