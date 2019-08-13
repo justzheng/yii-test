@@ -286,7 +286,7 @@ class SiteController extends Controller
 //        );
 //        $streamContext = stream_context_create($opts);
         $client = new \mongosoft\soapclient\Client([
-            'url' => 'http://127.0.0.1/yii-test/frontend/web/index.php/xml/hello',
+            'url' => 'http://47.96.64.84/yii-test/frontend/web/index.php/xml/hello',
             'options' => [
                 'cache_wsdl' => WSDL_CACHE_NONE,
     //                'stream_context'    => $streamContext
