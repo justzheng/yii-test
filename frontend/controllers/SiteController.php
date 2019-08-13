@@ -264,7 +264,7 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = \Hprose\Http\Client::create('http://127.0.0.1/yii-test/frontend/web/index.php/site/user',false);
+        $client = Client::create('http://127.0.0.1/yii-test/frontend/web/index.php/site/user',false);
         $res = $client->testSum(111);
         echo $res;
     }
@@ -274,10 +274,22 @@ class SiteController extends Controller
     }
 
     public function actionWsdl(){
+        libxml_disable_entity_loader(false);
+        $opts = array(
+            'ssl'   => array(
+                'verify_peer'          => false
+            ),
+            'https' => array(
+                'curl_verify_ssl_peer'  => false,
+                'curl_verify_ssl_host'  => false
+            )
+        );
+        $streamContext = stream_context_create($opts);
         $client = new \mongosoft\soapclient\Client([
             'url' => 'http://47.96.64.84/yii-test/frontend/web/xml/wsdl',
             'options' => [
                 'cache_wsdl' => WSDL_CACHE_NONE,
+                'stream_context'    => $streamContext
             ]
         ]);
         echo $client->getHello('Alex');
