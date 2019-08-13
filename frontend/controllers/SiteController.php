@@ -292,6 +292,8 @@ class SiteController extends Controller
     //                'stream_context'    => $streamContext
             ]
         ]);
+        var_dump($client);
+        var_dump($client->getHello('Alex'));
         //echo $client->getHello('Alex');
     }
 
