@@ -33,7 +33,7 @@ class XmlController extends Controller
     public function actions()
     {
         return [
-            'wsdl' => 'mongosoft\soapserver\Action',
+            'hello' => 'mongosoft\soapserver\Action',
         ];
     }
 
