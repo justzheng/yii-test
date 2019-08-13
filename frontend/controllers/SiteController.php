@@ -275,7 +275,7 @@ class SiteController extends Controller
 
     public function actionWsdl(){
         $client = new \mongosoft\soapclient\Client([
-            'url' => 'http://47.96.64.84/yii-test/frontend/web/index.php/xml/wsdl',
+            'url' => 'http://47.96.64.84:80/yii-test/frontend/web/index.php/xml/wsdl',
             'options' => [
                 'cache_wsdl' => WSDL_CACHE_NONE,
             ]
