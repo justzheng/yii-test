@@ -273,7 +273,13 @@ class SiteController extends Controller
     }
 
     public function actionDaw(){
-        $client = Client::create('http://wmb.2plus1.cn:8080/site/user',false);
+//        $client = Client::create('http://wmb.2plus1.cn:8080/site/user',false);
+//        $res = $client->testSum(111);
+//        echo $res;
+        /**
+         * @desc tcp
+         */
+        $client = new Client('tcp://127.0.0.1:8081', false);
         $res = $client->testSum(111);
         echo $res;
     }
