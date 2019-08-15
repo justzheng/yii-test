@@ -269,7 +269,7 @@ class SiteController extends Controller
         $service = new UserService();
         $server = new Server("tcp://0.0.0.0:8081");
         $server->addInstanceMethods($service);
-        return $server->start();
+        $server->start();
     }
 
     public function actionDaw(){

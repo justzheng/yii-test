@@ -13,6 +13,9 @@ use common\modelsext\TableTitleRelation;
 use Yii;
 use console\Job\Test;
 use console\Job\Test2;
+use common\service\UserService;
+use Hprose\Socket\Server;
+use Hprose\Socket\Client;
 
 class TestController extends \yii\console\Controller
 {
@@ -72,5 +75,12 @@ class TestController extends \yii\console\Controller
             sleep(1);
             Yii::$app->commonQueue->push(new Test2());
         }
+    }
+
+    public function actionWork(){
+        $service = new UserService();
+        $server = new Server("tcp://0.0.0.0:8081");
+        $server->addInstanceMethods($service);
+        $server->start();
     }
 }
