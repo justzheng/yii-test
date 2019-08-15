@@ -16,8 +16,8 @@ use frontend\models\ContactForm;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 use common\service\UserService;
-use Hprose\Http\Server;
-use Hprose\Http\Client;
+use Hprose\Socket\Server;
+use Hprose\Socket\Client;
 use Hprose\InvokeSettings;
 use Hprose\ResultMode;
 use yii\web\Response;
@@ -254,12 +254,21 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionUser() {
-
+            /**
+             * @desc http
+             */
+//        $service = new UserService();
+//        $server = new Server();
+////        var_dump($server);
+//        $server->addInstanceMethods($service);
+//
+//        return $server->start();
+        /**
+         * @desc tcp
+         */
         $service = new UserService();
-        $server = new Server();
-//        var_dump($server);
+        $server = new Server("tcp://0.0.0.0:8080");
         $server->addInstanceMethods($service);
-
         return $server->start();
     }
 
